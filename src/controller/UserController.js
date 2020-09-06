@@ -4,7 +4,12 @@ class UserController {
   async store(req, res) {
     try {
       const newUser = await User.create(req.body);
-      return res.json(newUser);
+      const {
+        id, name, email, register,
+      } = newUser;
+      return res.json({
+        id, name, email, register,
+      });
     } catch (e) {
       return res.status(400).json({
         errors: e.errors.map((err) => err.message),
@@ -14,7 +19,7 @@ class UserController {
 
   async index(req, res) {
     try {
-      const allUser = await User.findAll();
+      const allUser = await User.findAll({ attributes: ['id', 'name', 'email', 'register'] });
       return res.json(allUser);
     } catch (e) {
       return res.status(400).json({
@@ -36,21 +41,15 @@ class UserController {
 
   async update(req, res) {
     try {
-      if (!req.params.id) {
-        return res.status(400).json({
-          errors: ['Parametro id não enviado'],
-        });
-      }
-
-      const user = await User.findByPk(req.params.id);
+      const user = await User.findByPk(req.userId);
 
       if (!user) {
         return res.status(400).json({
           errors: ['Usuário não encontrado'],
         });
       }
-      const newData = await user.update(req.body);
-      return res.status(200).json(newData);
+      const { name, email, register } = await user.update(req.body);
+      return res.status(200).json({ name, email, register });
     } catch (e) {
       return res.status(400).json({
         errors: e.errors.map((err) => err.message),

@@ -7,6 +7,8 @@ import './src/database';
 
 import userRouter from './src/routes/userRoutes';
 import thiefRouter from './src/routes/thiefRoutes';
+import tokenRouter from './src/routes/tokenRoutes';
+import photoRouter from './src/routes/photoRoutes';
 
 class App {
   constructor() {
@@ -23,6 +25,8 @@ class App {
   routes() {
     this.app.use('/users', userRouter);
     this.app.use('/thief', thiefRouter);
+    this.app.use('/tokens', tokenRouter);
+    this.app.use('/photo', photoRouter);
   }
 }
 

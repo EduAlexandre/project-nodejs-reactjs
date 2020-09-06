@@ -14,7 +14,7 @@ class ThiefController {
 
   async index(req, res) {
     try {
-      const allThief = await Thief.findAll();
+      const allThief = await Thief.findAll({ attributes: ['id', 'name', 'nickname', 'actingarea', 'obs'] });
       return res.json(allThief);
     } catch (e) {
       return res.status(200).json({
