@@ -5,7 +5,12 @@ class ThiefController {
   async store(req, res) {
     try {
       const newThief = await Thief.create(req.body);
-      return res.json(newThief);
+      const {
+        name, nickname, actingarea, obs,
+      } = newThief;
+      return res.json({
+        name, nickname, actingarea, obs,
+      });
     } catch (e) {
       return res.status(400).json({
         errors: e.errors.map((err) => err.message),
