@@ -28,4 +28,8 @@ export default class Thief extends Model {
 
     return this;
   }
+
+  static associate(models) {
+    this.hasMany(models.Photo, { foreignKey: 'thief_id' });
+  }
 }
